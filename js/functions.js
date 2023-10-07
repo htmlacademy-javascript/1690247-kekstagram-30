@@ -6,7 +6,7 @@ function checkLength(inputString, length) {
 }
 
 function ternaryCheckLength(inputString, length) {
-  return inputString.length <= length ? true : false;
+  return inputString.length <= length;
 }
 
 function checkPalindrome(inputString) {
@@ -23,7 +23,7 @@ function checkPalindrome(inputString) {
 }
 
 function numberExtraction(inputString) {
-  const str = '' + inputString;
+  const str = `${ inputString}`;
   let finalStr = '';
   for (let i = 0; i < str.length - 1; i++) {
     if (!(isNaN(str.charAt(i)))) {
