@@ -13,7 +13,7 @@ function checkPalindrome(inputString) {
   let index = 0;
   let str = inputString.toLowerCase();
   str = str.replaceAll(' ', '')
-  for (i = str.length - 1; i > 0; i--) {
+  for (let i = str.length - 1; i > 0; i--) {
     if (str.charAt(index) != str.charAt(i)) {
       return false;
     }
@@ -25,7 +25,7 @@ function checkPalindrome(inputString) {
 function numberExtraction(inputString) {
   let str = '' + inputString;
   let finalStr = '';
-  for (i = 0; i < str.length - 1; i++) {
+  for (let i = 0; i < str.length - 1; i++) {
     if (!(isNaN(str.charAt(i)))) {
       finalStr += parseInt(str.charAt(i));
     }
