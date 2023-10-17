@@ -2,7 +2,7 @@ const AMOUNT_PHOTO = 25;
 const AMOUNT_COMMENTS = 30;
 const AMOUNT_AVATAR = 6;
 
-const photosID = createRandomIdFromRangeGenerator(0, AMOUNT_PHOTO)
+const photosID = createRandomIdFromRangeGenerator(0, AMOUNT_PHOTO);
 
 function randomizer(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -39,7 +39,7 @@ const descriptions = [
 ];
 
 function randomComments(amountComments) {
-  const commentsID = createRandomIdFromRangeGenerator(0, amountComments)
+  const commentsID = createRandomIdFromRangeGenerator(0, amountComments);
   const comments = [];
 
   for (let i = 0; i < amountComments; i++) {
@@ -63,7 +63,7 @@ function mock(numPhotos) {
       url: `photos/${i}.jpg`,
       description: descriptions[randomizer(0, descriptions.length - 1)],
       likes: randomizer(15, 200),
-      comments: randomComments(randomizer(0, 30))
+      comments: randomComments(randomizer(0, AMOUNT_COMMENTS))
     };
     photos.push(obj);
   }
@@ -76,7 +76,6 @@ function createRandomIdFromRangeGenerator(min, max) {
   return function () {
     let currentValue = randomizer(min, max);
     if (previousValues.length >= (max - min + 1)) {
-      console.error('Перебраны все числа из диапазона от ' + min + ' до ' + max);
       return null;
     }
     while (previousValues.includes(currentValue)) {
