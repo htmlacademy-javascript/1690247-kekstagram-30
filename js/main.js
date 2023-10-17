@@ -1,6 +1,8 @@
 const AMOUNT_PHOTO = 25;
 const AMOUNT_COMMENTS = 30;
 const AMOUNT_AVATAR = 6;
+const MIN_LIKES = 15;
+const MAX_LIKES = 200;
 
 const photosID = createRandomIdFromRangeGenerator(0, AMOUNT_PHOTO);
 
@@ -62,7 +64,7 @@ function mock(numPhotos) {
       id: photosID(),
       url: `photos/${i}.jpg`,
       description: descriptions[randomizer(0, descriptions.length - 1)],
-      likes: randomizer(15, 200),
+      likes: randomizer(MIN_LIKES, MAX_LIKES),
       comments: randomComments(randomizer(0, AMOUNT_COMMENTS))
     };
     photos.push(obj);
@@ -85,3 +87,5 @@ function createRandomIdFromRangeGenerator(min, max) {
     return currentValue;
   };
 }
+
+mock(AMOUNT_PHOTO);
