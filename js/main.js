@@ -1,34 +1,53 @@
+const AMOUNT_PHOTO = 25;
+const AMOUNT_COMMENTS = 30;
+const AMOUNT_AVATAR = 6;
+
+const photosID = createRandomIdFromRangeGenerator(0, AMOUNT_PHOTO)
+
 function randomizer(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function randomComments(amountComments) {
-  const comments = [];
-  const names = [
-    'Мышебор',
-    'Зуботяп',
-    'Хвостосмысл',
-    'Царапа',
-    'Кусихвост',
-    'Сладкопуз',
-    'Мурчала',
-    'Мурослав',
-    'Куселют',
-    'Пузогрей'];
+const NAMES = [
+  'Мышебор',
+  'Зуботяп',
+  'Хвостосмысл',
+  'Царапа',
+  'Кусихвост',
+  'Сладкопуз',
+  'Мурчала',
+  'Мурослав',
+  'Куселют',
+  'Пузогрей'];
 
-  const rows = `Всё отлично!
-  В целом всё неплохо. Но не всё.
-  Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.
-  Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.
-  Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.
-  Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!`.split(/\n/);
+const ROWS = ['Всё отлично!',
+  'В целом всё неплохо.', 'Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра.', 'В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают.', 'Как можно было поймать такой неудачный момент?!'];
+
+const descriptions = [
+  'Закат на море',
+  'Утро в горах',
+  'Цветущий сад',
+  'Семейный ужин',
+  'Старый мост',
+  'Новый город',
+  'Прогулка на велосипеде',
+  'Зимний пейзаж'
+];
+
+function randomComments(amountComments) {
+  const commentsID = createRandomIdFromRangeGenerator(0, amountComments)
+  const comments = [];
 
   for (let i = 0; i < amountComments; i++) {
     const comment = {
-      id: i,
-      avatar: `img/avatar-${randomizer(1, 6)}.svg`,
-      message: rows[randomizer(0, rows.length - 1)],
-      name: names[randomizer(0, names.length - 1)],
+      id: commentsID(),
+      avatar: `img/avatar-${randomizer(1, AMOUNT_AVATAR)}.svg`,
+      message: ROWS[randomizer(0, ROWS.length - 1)],
+      name: NAMES[randomizer(0, NAMES.length - 1)],
     };
     comments.push(comment);
   }
@@ -36,20 +55,11 @@ function randomComments(amountComments) {
 }
 
 function mock(numPhotos) {
-  const descriptions = [
-    'Закат на море',
-    'Утро в горах',
-    'Цветущий сад',
-    'Семейный ужин',
-    'Старый мост',
-    'Новый город',
-    'Прогулка на велосипеде',
-    'Зимний пейзаж'
-  ];
+
   const photos = [];
   for (let i = 0; i < numPhotos; i++) {
     const obj = {
-      id: i,
+      id: photosID(),
       url: `photos/${i}.jpg`,
       description: descriptions[randomizer(0, descriptions.length - 1)],
       likes: randomizer(15, 200),
@@ -60,3 +70,19 @@ function mock(numPhotos) {
   return photos;
 }
 
+function createRandomIdFromRangeGenerator(min, max) {
+  const previousValues = [];
+
+  return function () {
+    let currentValue = randomizer(min, max);
+    if (previousValues.length >= (max - min + 1)) {
+      console.error('Перебраны все числа из диапазона от ' + min + ' до ' + max);
+      return null;
+    }
+    while (previousValues.includes(currentValue)) {
+      currentValue = randomizer(min, max);
+    }
+    previousValues.push(currentValue);
+    return currentValue;
+  };
+}
