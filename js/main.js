@@ -5,6 +5,7 @@ const MIN_LIKES = 15;
 const MAX_LIKES = 200;
 
 const photosID = createRandomIdFromRangeGenerator(0, AMOUNT_PHOTO);
+const photosURL = createRandomIdFromRangeGenerator(0, AMOUNT_PHOTO);
 
 function randomizer(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -62,7 +63,7 @@ function mock(numPhotos) {
   for (let i = 0; i < numPhotos; i++) {
     const obj = {
       id: photosID(),
-      url: `photos/${i}.jpg`,
+      url: `photos/${photosURL()}.jpg`,
       description: descriptions[randomizer(0, descriptions.length - 1)],
       likes: randomizer(MIN_LIKES, MAX_LIKES),
       comments: randomComments(randomizer(0, AMOUNT_COMMENTS))
@@ -87,5 +88,4 @@ function createRandomIdFromRangeGenerator(min, max) {
     return currentValue;
   };
 }
-
 mock(AMOUNT_PHOTO);
