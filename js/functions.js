@@ -25,3 +25,7 @@ function numberExtraction(inputString) {
   }
   return parseInt(finalStr, 10);
 }
+
+function workTime (startTime, endTime, meetingStart, meetingLength) {
+  
+}
