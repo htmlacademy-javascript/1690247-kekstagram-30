@@ -1,6 +1,7 @@
 function ternaryCheckLength(inputString, length) {
   return inputString.length <= length;
 }
+ternaryCheckLength();
 
 function checkPalindrome(inputString) {
   let index = 0;
@@ -14,9 +15,10 @@ function checkPalindrome(inputString) {
   }
   return true;
 }
+checkPalindrome();
 
 function numberExtraction(inputString) {
-  const str = `${ inputString}`;
+  const str = `${inputString}`;
   let finalStr = '';
   for (let i = 0; i < str.length - 1; i++) {
     if (!(isNaN(str.charAt(i)))) {
@@ -25,3 +27,4 @@ function numberExtraction(inputString) {
   }
   return parseInt(finalStr, 10);
 }
+numberExtraction();
