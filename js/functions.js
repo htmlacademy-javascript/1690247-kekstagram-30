@@ -1,10 +1,3 @@
-function checkLength(inputString, length) {
-  if (inputString.length <= length) {
-    return true;
-  }
-  return false;
-}
-
 function ternaryCheckLength(inputString, length) {
   return inputString.length <= length;
 }
