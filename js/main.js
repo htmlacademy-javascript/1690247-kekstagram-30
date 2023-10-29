@@ -1,2 +1,4 @@
+import { renderPictures } from './render.js';
 import { mock, AMOUNT_PHOTO } from './data.js';
-mock(AMOUNT_PHOTO);
+
+renderPictures(mock(AMOUNT_PHOTO));
