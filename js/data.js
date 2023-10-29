@@ -36,8 +36,8 @@ const descriptions = [
   'Зимний пейзаж'
 ];
 
-const photosID = createRandomIdFromRangeGenerator(0, AMOUNT_PHOTO);
-const photosURL = createRandomIdFromRangeGenerator(0, AMOUNT_PHOTO);
+const photosID = createRandomIdFromRangeGenerator(1, AMOUNT_PHOTO + 1);
+const photosURL = createRandomIdFromRangeGenerator(1, AMOUNT_PHOTO);
 
 
 function randomComments(amountComments) {
@@ -59,7 +59,7 @@ function randomComments(amountComments) {
 function mock(numPhotos) {
 
   const photos = [];
-  for (let i = 1; i < numPhotos + 1; i++) {
+  for (let i = 0; i < numPhotos; i++) {
     const obj = {
       id: photosID(),
       url: `photos/${photosURL()}.jpg`,
