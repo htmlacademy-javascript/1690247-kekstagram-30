@@ -59,7 +59,7 @@ function randomComments(amountComments) {
 function mock(numPhotos) {
 
   const photos = [];
-  for (let i = 0; i < numPhotos; i++) {
+  for (let i = 1; i < numPhotos + 1; i++) {
     const obj = {
       id: photosID(),
       url: `photos/${photosURL()}.jpg`,
