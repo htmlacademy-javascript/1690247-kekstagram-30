@@ -6,7 +6,7 @@ const commentTotal = bigPicture.querySelector('.social__comment-total-count');
 const socialComments = bigPicture.querySelector('.social__comments');
 const socialCaption = bigPicture.querySelector('.social__caption');// что значит вставить второй строкой?
 const avatarSize = 35;
-const commentCounter = bigPicture.querySelector('.social__comment-count');;
+const commentCounter = bigPicture.querySelector('.social__comment-count');
 const body = document.querySelector('body');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const initComments = 5;
@@ -53,6 +53,7 @@ function openFullsize(photo) {
   socialComments.innerHTML = '';
   let shownCommentCounter = Number(commentShown.textContent);
   if (photo.comments.length <= initComments) {
+    commentShown.textContent = commentTotal.textContent;
     photo.comments.forEach((comment) => {
       renderComment(comment);
     });
@@ -76,8 +77,8 @@ function openFullsize(photo) {
           renderComment(photo.comments[i]);
         }
         commentsLoadButton.removeEventListener('click');
-        commentsLoadButton.classList.add('hidden'); //не могу добиться, чтобы исчезла после прогрузки всех фото
       }
+      commentsLoadButton.classList.add('hidden'); //не могу добиться, чтобы исчезла после прогрузки всех фото
     });
   }
 
