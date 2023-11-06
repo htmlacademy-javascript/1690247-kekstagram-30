@@ -15,10 +15,10 @@ function renderPictures(photos) {
     pictureElement.querySelector('.picture__likes').textContent = photo.likes;
     pictureElement.querySelector('.picture__comments').textContent = photo.comments.length;
 
-    pictureElement.querySelector('.picture__img').addEventListener('click',() => openFullsize(photo));//добавляем обработчик
+    pictureElement.querySelector('.picture__img').addEventListener('click', () => openFullsize(photo));//добавляем обработчик
 
     picturesContainer.appendChild(pictureElement);
   });
 }
 
-export {renderPictures};
+export { renderPictures };
