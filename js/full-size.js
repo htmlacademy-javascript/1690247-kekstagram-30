@@ -62,6 +62,4 @@ function openFullsize(photo) {
   });
 }
 
-
-
 export { openFullsize };

@@ -1,4 +1,4 @@
-import { openFullsize } from "./full-size";
+import { openFullsize } from './full-size';
 
 
 const picturesContainer = document.querySelector('.pictures');
