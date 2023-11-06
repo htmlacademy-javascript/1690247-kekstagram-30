@@ -6,16 +6,19 @@ const commentTotal = bigPicture.querySelector('.social__comment-total-count');
 const socialComments = bigPicture.querySelector('.social__comments');
 const socialCaption = bigPicture.querySelector('.social__caption');// что значит вставить второй строкой?
 const avatarSize = 35;
-const commentCounter = bigPicture.querySelector('.social__comment-count');
-const commentLoader = bigPicture.querySelector('.comments-loader');
+const commentCounter = bigPicture.querySelector('.social__comment-count');;
 const body = document.querySelector('body');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
+const initComments = 5;
+const commentsLoadButton = bigPicture.querySelector('.social__comments-loader');
 
 function closeFullsize() {
   bigPicture.classList.add('hidden');
   commentCounter.classList.remove('hidden');
-  commentLoader.classList.remove('hidden');
+  commentsLoadButton.classList.remove('hidden');
   body.classList.remove('modal-open');
+  document.removeEventListener('keydown');
+  commentsLoadButton.removeEventListener('click');
 }
 
 function renderComment(comment) {
@@ -45,14 +48,39 @@ function openFullsize(photo) {
   imgElement.alt = photo.description;
   likesCountElement.textContent = photo.likes;
   commentTotal.textContent = photo.comments.length;
-  commentShown.textContent = photo.comments.length;
+  commentShown.textContent = initComments;
   socialCaption.textContent = photo.description;
   socialComments.innerHTML = '';
-  photo.comments.forEach((comment) => {
-    renderComment(comment);
-  });
-  commentCounter.classList.add('hidden');
-  commentLoader.classList.add('hidden');
+  let shownCommentCounter = Number(commentShown.textContent);
+  if (photo.comments.length <= initComments) {
+    photo.comments.forEach((comment) => {
+      renderComment(comment);
+    });
+    commentsLoadButton.classList.add('hidden');
+  } else {
+    for (let i = 1; i < initComments + 1; i++) {
+      renderComment(photo.comments[i - 1]);
+      commentShown.textContent = initComments;
+    }
+    commentsLoadButton.addEventListener('click', () => {
+      const commentsCounterBefore = shownCommentCounter;
+      shownCommentCounter += initComments;
+      commentShown.textContent = shownCommentCounter;
+      if (shownCommentCounter < Number(commentTotal.textContent)) {
+        for (let i = commentsCounterBefore; i < shownCommentCounter; i++) {
+          renderComment(photo.comments[i]);
+        }
+      } else {
+        commentShown.textContent = commentTotal.textContent;
+        for (let i = commentsCounterBefore; i < shownCommentCounter; i++) {
+          renderComment(photo.comments[i]);
+        }
+        commentsLoadButton.removeEventListener('click');
+        commentsLoadButton.classList.add('hidden'); //не могу добиться, чтобы исчезла после прогрузки всех фото
+      }
+    });
+  }
+
   body.classList.add('modal-open');
   closeButton.addEventListener('click', () => closeFullsize());
   document.addEventListener('keydown', (event) => {
@@ -63,3 +91,4 @@ function openFullsize(photo) {
 }
 
 export { openFullsize };
+
