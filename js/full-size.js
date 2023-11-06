@@ -48,7 +48,7 @@ function openFullsize(photo) {
   commentShown.textContent = photo.comments.length;
   socialCaption.textContent = photo.description;
   socialComments.innerHTML = '';
-  photo.comments.forEach(comment => {
+  photo.comments.forEach((comment) => {
     renderComment(comment);
   });
   commentCounter.classList.add('hidden');
