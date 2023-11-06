@@ -1,10 +1,10 @@
 import { openFullsize } from "./full-size";
 
+
+const picturesContainer = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture');
+
 function renderPictures(photos) {
-  const picturesContainer = document.querySelector('.pictures');
-
-  const pictureTemplate = document.querySelector('#picture');
-
   photos.forEach((photo) => {
     const pictureElement = pictureTemplate.content.cloneNode(true);
 
