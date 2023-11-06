@@ -9,7 +9,7 @@ const avatarSize = 35;
 const commentCounter = bigPicture.querySelector('.social__comment-count');
 const commentLoader = bigPicture.querySelector('.comments-loader');
 const body = document.querySelector('body');
-const closeButton = bigPicture.querySelector('.big-picture__cancel')
+const closeButton = bigPicture.querySelector('.big-picture__cancel');
 
 function closeFullsize() {
   bigPicture.classList.add('hidden');
@@ -54,10 +54,10 @@ function openFullsize(photo) {
   commentCounter.classList.add('hidden');
   commentLoader.classList.add('hidden');
   body.classList.add('modal-open');
-  closeButton.addEventListener('click', () => closeFullsize())
+  closeButton.addEventListener('click', () => closeFullsize());
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-      closeFullsize(); // Закрывает модальное окно при нажатии "Esc"
+      closeFullsize();
     }
   });
 }
