@@ -2,7 +2,7 @@ function ternaryCheckLength(inputString, length) {
   return inputString.length <= length;
 }
 ternaryCheckLength();
-
+//типа функция
 function checkPalindrome(inputString) {
   let index = 0;
   let str = inputString.toLowerCase();
