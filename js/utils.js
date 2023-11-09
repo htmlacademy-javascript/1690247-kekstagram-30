@@ -1,3 +1,5 @@
+const body = document.querySelector('body');
+
 function randomizer(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -17,4 +19,6 @@ function createRandomIdFromRangeGenerator(min, max) {
     return currentValue;
   };
 }
-export { randomizer, createRandomIdFromRangeGenerator };
+
+
+export { randomizer, createRandomIdFromRangeGenerator, body };
