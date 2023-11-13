@@ -2,11 +2,9 @@ import '../vendor/pristine/pristine.min.js';
 
 const form = document.querySelector('.img-upload__form');
 const hashtagInput = document.querySelector('.text__hashtags');
-const maxHashtags = 5;
-const minHashtagLength = 2;
-const maxHashtagLength = 20;
-const symbolsPattern = /[^a-zA-Z0-9а-яА-ЯёЁ]/g;
 const descriptionInput = document.querySelector('.text__description');
+const maxHashtags = 5;
+const maxHashtagLength = 20;
 const maxCommentLength = 140;
 
 const pristine = new Pristine(form, {
@@ -15,69 +13,90 @@ const pristine = new Pristine(form, {
   errorTextParent: 'img-upload__field-wrapper',
 });
 
-const startsWithHash = (string) => string[0] === '#';
-
-const hasValidLength = (string) =>
-  string.length >= minHashtagLength && string.length <= maxHashtagLength;
-
-const hasValidSymbols = (string) => symbolsPattern.test(string.slice(1));
-
-const hasValidCount = (tags) => tags.length <= maxHashtags;
-
-const areUnique = (string) => {
-  const hashtags = string.split(' ').filter(tag => tag !== '').map(tag => tag.toLowerCase());
-  const uniqueHashtags = new Set(hashtags);
-  return uniqueHashtags.size === hashtags.length;
+const validateStartsWithHash = (input) => {
+  if (input.trim() === '') {
+    return true;
+  }
+  return input.split(' ').every((tag) => tag === '' || tag.startsWith('#'));
 };
-
 pristine.addValidator(
   hashtagInput,
-  startsWithHash,
-  'Хэштег должен начинаться с "#"',
+  validateStartsWithHash,
+  'Каждый хэштег должен начинаться с "#"',
   1,
   true
 );
 
+const validateHasValidCharacters = (input) => {
+  if (input.trim() === '') {
+    return true;
+  }
+  return input.split(' ').every((tag) => tag === '' || /^[A-Za-zА-Яа-я0-9ёЁ]*$/.test(tag.slice(1)));
+};
 pristine.addValidator(
   hashtagInput,
-  hasValidLength,
-  `Длинна хэшгтега от ${minHashtagLength} до ${maxHashtagLength} символов`,
-  3,
-  true
-);
-pristine.addValidator(
-  hashtagInput,
-  hasValidCount,
-  `Не более ${maxHashtags} хэштегов`,
-  4,
-  true
-);
-pristine.addValidator(
-  hashtagInput,
-  hasValidSymbols,
-  'Можно использовать только буквы русского языка, латиницу и цифры в хэштеге',
+  validateHasValidCharacters,
+  'Хэштег может содержать только буквы и цифры',
   2,
   true
 );
+
+const validateHashtagLength = (input) => {
+  if (input.trim() === '') {
+    return true;
+  }
+  return input.split(' ').every((tag) => tag.length >= 2 && tag.length <= maxHashtagLength);
+};
 pristine.addValidator(
   hashtagInput,
-  areUnique,
+  validateHashtagLength,
+  `Хэштег должен быть длиной от 2 до ${maxHashtagLength} символов`,
+  3,
+  true
+);
+
+const validateUniqueHashtags = (input) => {
+  const hashtags = input.toLowerCase().split(' ').filter((tag) => tag !== '');
+  const uniqueHashtags = new Set(hashtags);
+  return uniqueHashtags.size === hashtags.length;
+};
+pristine.addValidator(
+  hashtagInput,
+  validateUniqueHashtags,
   'Хэштеги не должны повторяться',
+  4,
+  true
+);
+
+const validateHashtagCount = (input) => {
+  if (input.trim() === '') {
+    return true;
+  }
+  const hashtags = input.split(' ').filter((tag) => tag !== '');
+  return hashtags.length <= maxHashtags;
+};
+pristine.addValidator(
+  hashtagInput,
+  validateHashtagCount,
+  `Не более ${maxHashtags} хэштегов`,
   5,
   true
 );
-const checkCommentLength = (value) => value.length <= maxCommentLength;
 
+const checkCommentLength = (value) => value.length <= maxCommentLength;
 pristine.addValidator(
   descriptionInput,
   checkCommentLength,
-  'Не более 140 знаков'
+  `Не более ${maxCommentLength} знаков`,
+  1,
+  true
 );
 
-
 const onFormSubmit = (event) => {
-  pristine.validate();
-  event.preventDefault();
+  const isValid = pristine.validate();
+  if (!isValid) {
+    event.preventDefault();
+  }
 };
 
 export { onFormSubmit, form };
