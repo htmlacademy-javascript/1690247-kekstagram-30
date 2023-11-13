@@ -24,9 +24,10 @@ const hasValidSymbols = (string) => symbolsPattern.test(string.slice(1));
 
 const hasValidCount = (tags) => tags.length <= maxHashtags;
 
-const isUnique = (tags) => {
-  const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
-  return lowerCaseTags.length === new Set(lowerCaseTags).size;
+const areUnique = (string) => {
+  const hashtags = string.split(' ').filter(tag => tag !== '').map(tag => tag.toLowerCase());
+  const uniqueHashtags = new Set(hashtags);
+  return uniqueHashtags.size === hashtags.length;
 };
 
 pristine.addValidator(
@@ -58,13 +59,13 @@ pristine.addValidator(
   2,
   true
 );
-// pristine.addValidator(
-//   hashtagInput,
-//   isUnique,
-//   'Хэштеги не должны повторяться',
-//   5,
-//   true
-// );
+pristine.addValidator(
+  hashtagInput,
+  areUnique,
+  'Хэштеги не должны повторяться',
+  5,
+  true
+);
 const checkCommentLength = (value) => value.length <= maxCommentLength;
 
 pristine.addValidator(
