@@ -6,8 +6,8 @@ const maxHashtags = 5;
 const minHashtagLength = 2;
 const maxHashtagLength = 20;
 const symbolsPattern = /[^a-zA-Z0-9а-яА-ЯёЁ]/g;
-//const descriptionInput = document.querySelector('.text__description');
-//const maxCommentLength = 140;
+const descriptionInput = document.querySelector('.text__description');
+const maxCommentLength = 140;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -24,39 +24,59 @@ const hasValidSymbols = (string) => symbolsPattern.test(string.slice(1));
 
 const hasValidCount = (tags) => tags.length <= maxHashtags;
 
-pristine.addValidator(
-  startsWithHash,
-  hashtagInput,
-  1,
-  'Хэштег должен начинаться с "#"',
-  true
-);
-
-pristine.addValidator(
-  hasValidLength,
-  hashtagInput,
-  3,
-  'Длинна хэшгтега от 2 до 20 символов',
-  true
-);
-pristine.addValidator(
-  hasValidCount,
-  hashtagInput,
-  4,
-  'Не более 5 хэштегов',
-  true
-);
-pristine.addValidator(
-  hasValidSymbols,
-  hashtagInput,
-  2,
-  'Можно использовать только буквы русского языка, латиницу и цифры в хэштеге',
-  true
-);
-
-const onFormSubmit = (event) => {
-  event.preventDefault();
-  pristine.validate();
+const isUnique = (tags) => {
+  const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
+  return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-export {onFormSubmit};
+pristine.addValidator(
+  hashtagInput,
+  startsWithHash,
+  'Хэштег должен начинаться с "#"',
+  1,
+  true
+);
+
+pristine.addValidator(
+  hashtagInput,
+  hasValidLength,
+  `Длинна хэшгтега от ${minHashtagLength} до ${maxHashtagLength} символов`,
+  3,
+  true
+);
+pristine.addValidator(
+  hashtagInput,
+  hasValidCount,
+  `Не более ${maxHashtags} хэштегов`,
+  4,
+  true
+);
+pristine.addValidator(
+  hashtagInput,
+  hasValidSymbols,
+  'Можно использовать только буквы русского языка, латиницу и цифры в хэштеге',
+  2,
+  true
+);
+// pristine.addValidator(
+//   hashtagInput,
+//   isUnique,
+//   'Хэштеги не должны повторяться',
+//   5,
+//   true
+// );
+const checkCommentLength = (value) => value.length <= maxCommentLength;
+
+pristine.addValidator(
+  descriptionInput,
+  checkCommentLength,
+  'Не более 140 знаков'
+);
+
+
+const onFormSubmit = (event) => {
+  pristine.validate();
+  event.preventDefault();
+};
+
+export { onFormSubmit, form };
