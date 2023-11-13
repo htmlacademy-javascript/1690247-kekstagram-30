@@ -56,10 +56,25 @@ pristine.addValidator(
 );
 
 const validateUniqueHashtags = (input) => {
+  if (input.trim() === '') {
+    return true;
+  }
+
   const hashtags = input.toLowerCase().split(' ').filter((tag) => tag !== '');
-  const uniqueHashtags = new Set(hashtags);
-  return uniqueHashtags.size === hashtags.length;
+  const uniqueHashtags = {};
+  let isUnique = true;
+
+  hashtags.forEach((tag) => {
+    if (uniqueHashtags[tag]) {
+      isUnique = false;
+    } else {
+      uniqueHashtags[tag] = true;
+    }
+  });
+
+  return isUnique;
 };
+
 pristine.addValidator(
   hashtagInput,
   validateUniqueHashtags,
