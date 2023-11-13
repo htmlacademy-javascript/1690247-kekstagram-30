@@ -1,13 +1,14 @@
+import { body } from './utils';
+
 const bigPicture = document.querySelector('.big-picture');
 const imgElement = bigPicture.querySelector('.big-picture__img img');
 const likesCountElement = bigPicture.querySelector('.likes-count');
 const commentShown = bigPicture.querySelector('.social__comment-shown-count');
 const commentTotal = bigPicture.querySelector('.social__comment-total-count');
 const socialComments = bigPicture.querySelector('.social__comments');
-const socialCaption = bigPicture.querySelector('.social__caption');// что значит вставить второй строкой?
+const socialCaption = bigPicture.querySelector('.social__caption');
 const avatarSize = 35;
 const commentCounter = bigPicture.querySelector('.social__comment-count');
-const body = document.querySelector('body');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const initComments = 5;
 const commentsLoadButton = bigPicture.querySelector('.social__comments-loader');
