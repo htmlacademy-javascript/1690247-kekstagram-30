@@ -1,12 +1,14 @@
 import { body } from './utils';
+import { onFormSubmit } from './form-validation';
 
 const uploadButton = document.querySelector('.img-upload__input');
-const uploadForm = document.querySelector('.img-upload__overlay');
+const uploadOverlay = document.querySelector('.img-upload__overlay');
 //const preview = document.querySelector('.img-upload__preview img');
 const closeButton = document.querySelector('.img-upload__cancel');
+const submitButton = document.querySelector('.upload-submit');
 
 function closeUploadForm () {
-  uploadForm.classList.add('hidden');
+  uploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', handleEscapeKey);
   closeButton.removeEventListener('click', closeUploadForm);
@@ -19,10 +21,12 @@ function handleEscapeKey(event) {
 }
 
 function showUploadForm () {
-  uploadForm.classList.remove('hidden');
+  uploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', handleEscapeKey);
   closeButton.addEventListener('click', closeUploadForm);
+  submitButton.addEventListener('click', () => onFormSubmit());
 }
+
 
 uploadButton.addEventListener('change', () => showUploadForm());
