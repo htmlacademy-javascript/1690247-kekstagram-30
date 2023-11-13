@@ -1,5 +1,5 @@
 import { body } from './utils';
-import { onFormSubmit, form } from './form-validation';
+import { onFormSubmit, form, hashtagInput, descriptionInput } from './form-validation';
 
 const uploadButton = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -15,7 +15,9 @@ function closeUploadForm () {
 }
 
 function handleEscapeKey(event) {
-  if (event.key === 'Escape') {
+  const isFocusOnInput = document.activeElement === hashtagInput || document.activeElement === descriptionInput;
+
+  if (event.key === 'Escape' && !isFocusOnInput) {
     closeUploadForm();
   }
 }

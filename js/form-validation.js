@@ -114,4 +114,4 @@ const onFormSubmit = (event) => {
   }
 };
 
-export { onFormSubmit, form };
+export { onFormSubmit, form, hashtagInput, descriptionInput};
